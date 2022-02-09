@@ -39,7 +39,7 @@ void mergeSortRecursive(int *array, const size_t l, const size_t r)
     }
 }
 
-int *mergeSort(const int *array, const size_t n)
+int *mergeSort(int * const array, const size_t n)
 {
     int *copy = array_int_copy(array, n);
 

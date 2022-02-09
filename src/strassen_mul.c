@@ -2,6 +2,15 @@
 #include <stdlib.h>
 #include "utils.h"
 #include "matrix_int.h"
+#include "msort.h"
+
+
+int cmpfunc(const void *_Nonnull a, const void *_Nonnull b)
+{
+    int x = *(int*)a;
+    int y = *(int*)b;
+    return (y - x);
+}
 
 int main(int argc, const char *argv[])
 {
@@ -15,7 +24,10 @@ int main(int argc, const char *argv[])
             printf("%3d ", matrix_int_get(s, i, j));
         printf("\n");
     }
-        
+    
+    msort(a, 16, sizeof(int), cmpfunc);
+
+    print_array_int(a, 16, "\n");
 
     exit(EXIT_SUCCESS);
 }

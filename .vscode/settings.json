@@ -11,6 +11,16 @@
         "cstdlib": "c",
         "random": "c",
         "string": "c",
-        "string_view": "c"
+        "string_view": "c",
+        "ios": "c",
+        "bitset": "c",
+        "functional": "c",
+        "list": "c",
+        "memory": "c",
+        "__bit_reference": "c",
+        "__string": "c",
+        "deque": "c",
+        "filesystem": "c",
+        "*.tcc": "c"
     }
 }

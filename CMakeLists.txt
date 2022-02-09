@@ -30,6 +30,7 @@ LINK_DIRECTORIES("${CMAKE_BINARY_DIR}/../lib" ${OS_LIB_DIRS})
 
 ADD_LIBRARY(utils STATIC src/utils.c)
 ADD_LIBRARY(matrix STATIC src/matrix_int.c)
+ADD_LIBRARY(msort STATIC src/msort.c)
 
 ADD_EXECUTABLE(merge-sort src/merge_sort.c)
 TARGET_LINK_LIBRARIES(merge-sort utils)
@@ -41,4 +42,4 @@ ADD_EXECUTABLE(array-inv src/array_inv.c)
 TARGET_LINK_LIBRARIES(array-inv utils)
 
 ADD_EXECUTABLE(strassen-mul src/strassen_mul.c)
-TARGET_LINK_LIBRARIES(strassen-mul utils matrix)
+TARGET_LINK_LIBRARIES(strassen-mul utils matrix msort)
