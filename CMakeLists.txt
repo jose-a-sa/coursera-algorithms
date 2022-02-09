@@ -1,7 +1,7 @@
 # Specify the minimum CMAKE version required
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0.0)
 
-PROJECT(coursera-algoritms VERSION 0.0.2)
+PROJECT(coursera-algorithms VERSION 0.0.2)
 
 # Set output directories
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/../lib")

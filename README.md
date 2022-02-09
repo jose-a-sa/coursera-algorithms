@@ -1,1 +1,1 @@
-# coursera-algoritms
+# coursera-algorithms
