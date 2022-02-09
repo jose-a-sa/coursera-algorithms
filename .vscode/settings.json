@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "*.ejs": "html",
+        "*.drawio": "xml",
+        "*.m": "octave",
+        ".prettierrc": "yaml",
+        "algorithm": "c",
+        "__tuple": "c",
+        "array": "c",
+        "iterator": "c",
+        "cstdlib": "c",
+        "random": "c",
+        "string": "c",
+        "string_view": "c"
+    }
+}
