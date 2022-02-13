@@ -8,6 +8,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/../lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/../lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/../bin")
 
+find_package(OpenGL REQUIRED)
+find_package(GLUT REQUIRED)
 
 # OS specific variables
 if(APPLE)
@@ -27,13 +29,12 @@ endif()
 INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/../include" ${OS_INCLUDE_DIRS})
 LINK_DIRECTORIES("${CMAKE_BINARY_DIR}/../lib" ${OS_LIB_DIRS})
 
-
 ADD_LIBRARY(utils STATIC src/utils.c)
 ADD_LIBRARY(matrix STATIC src/matrix_int.c)
 ADD_LIBRARY(msort STATIC src/msort.c)
 
 ADD_EXECUTABLE(merge-sort src/merge_sort.c)
-TARGET_LINK_LIBRARIES(merge-sort utils)
+TARGET_LINK_LIBRARIES(merge-sort utils msort)
 
 ADD_EXECUTABLE(karatsuba src/karatsuba.c)
 TARGET_LINK_LIBRARIES(karatsuba utils m)

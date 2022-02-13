@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "utils.h"
+#include "msort.h"
 
-void merge(int *array, const size_t l, const size_t m, const size_t r)
+void merge(int *array, const size_t l, const size_t r)
 {
-    const size_t nL = m - l;
-    const size_t nR = r - m;
-    int *L = sub_array_int(array, l, m);
-    int *R = sub_array_int(array, m, r);
+    const size_t nL = (r - l) / 2;
+    const size_t nR = (r - l) - nL;
+    int *L = sub_array_int(array, l, l + nL);
+    int *R = sub_array_int(array, l + nL, r);
 
     int i = 0;
     int j = 0;
@@ -35,7 +36,7 @@ void mergeSortRecursive(int *array, const size_t l, const size_t r)
         mergeSortRecursive(array, l, m);
         mergeSortRecursive(array, m, r);
 
-        merge(array, l, m, r);
+        merge(array, l, r);
     }
 }
 
@@ -48,17 +49,34 @@ int *mergeSort(int * const array, const size_t n)
     return copy;
 }
 
+int cmpfunc(const void *_Nonnull a, const void *_Nonnull b)
+{
+    int x = *(int *)a;
+    int y = *(int *)b;
+    return x - y;
+}
+
 int main(int argc, const char *argv[])
 {
-    int array[] = {4, 5, 9, 1, 4, -1, -5};
-    const size_t n = (size_t)(sizeof(array) / sizeof(*array));
+    int a[] = {4, 5, 9, 1, 4, -1, -5};
+    const size_t n_a = (size_t)(sizeof(a) / sizeof(*a));
 
-    printf("%6s: ", "array");
-    print_array_int(array, n, "\n");
-    printf("%6s: %zu\n", "n", n);
+    printf("%30s: ", "array a");
+    print_array_int(a, n_a, "\n");
 
-    printf("%6s: ", "array");
-    print_array_int(mergeSort(array, n), n, "\n");
+    printf("%30s: ", "sorted a (infile mergeSort)");
+    print_array_int(mergeSort(a, n_a), n_a, "\n");
+
+    int b[] = {4, 5, 9, 1, 4, -1, -5};
+    const size_t n_b = (size_t)(sizeof(b) / sizeof(*b));
+
+    printf("%30s: ", "array b");
+    print_array_int(a, n_a, "\n");
+
+    msort(b, n_b, sizeof(int), cmpfunc);
+
+    printf("%30s: ", "sorted b (infile mergeSort)");
+    print_array_int(b, n_b, "\n");
 
     exit(EXIT_SUCCESS);
 }
