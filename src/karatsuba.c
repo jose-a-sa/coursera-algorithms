@@ -28,7 +28,7 @@ char *karatsuba_add(char *const x, char *const y, const int sign)
     const int s = (sign < 0) ? -1 : 1;
     const size_t nx = strlen(x);
     const size_t ny = strlen(y);
-    const size_t n = MAX(nx, ny) + 1;
+    const size_t n = nx + ny;
 
     char *z0, *z;
     if ((z0 = (char *)calloc(n + 1, sizeof(char))) == NULL)
@@ -55,6 +55,29 @@ char *karatsuba_add(char *const x, char *const y, const int sign)
     return z;
 }
 
+static char *_karatsuba_mul_single(char *const x, char *const y)
+{
+    int res = (x[0] - '0') * (y[0] - '0');
+    char *z;
+
+    if(res >= 10)
+    {
+        if ((z = (char *)calloc(3, sizeof(char))) == NULL)
+            error("failed alloc of char pointer in karatsuba_mul");
+        z[2] = '\0';
+        sprintf(z, "%02d", res);
+    }
+    else
+    {
+        if ((z = (char *)calloc(2, sizeof(char))) == NULL)
+            error("failed alloc of char pointer in karatsuba_mul");
+        z[1] = '\0';
+        sprintf(z, "%01d", res);
+    }
+
+    return z;
+}
+
 char *karatsuba_mul(char *const x0, char *const y0)
 {
     const size_t nx = strlen(x0);
@@ -65,24 +88,11 @@ char *karatsuba_mul(char *const x0, char *const y0)
     x = padleft(x0, '0', n - nx);
     y = padleft(y0, '0', n - ny);
 
-    if (n == 0) return "0";
+    if (n == 0)
+        return "0";
 
     if (n == 1)
-    {
-        int res = (x[0] - '0') * (y[0] - '0');
-        if (res == 0) return "0";
-
-        char *z0, *z;
-        if ((z0 = (char *)calloc(3, sizeof(char))) == NULL)
-            error("failed alloc of char pointer in karatsuba_mul");
-        z0[2] = '\0';
-
-        sprintf(z0, "%02d", res);
-        z = strip_left_zeros(z0);
-        free(z0);
-
-        return z;
-    }
+        return _karatsuba_mul_single(x, y);
 
     const size_t m = n / 2;
     char *a = substring(x, 0, m);
@@ -94,7 +104,7 @@ char *karatsuba_mul(char *const x0, char *const y0)
     char *bd = karatsuba_mul(b, d);
     char *aPbcPd = karatsuba_mul(karatsuba_add(a, b, 1), karatsuba_add(c, d, 1));
     char *adPbc = karatsuba_add(aPbcPd, karatsuba_add(ac, bd, 1), -1);
-    char *res = karatsuba_add(bd, karatsuba_add(padright(adPbc, '0', n - m), padright(ac, '0', 2 * (n - m)), 1), 1); 
+    char *res = karatsuba_add(bd, karatsuba_add(padright(adPbc, '0', n - m), padright(ac, '0', 2 * (n - m)), 1), 1);
 
     free(x);
     free(y);
