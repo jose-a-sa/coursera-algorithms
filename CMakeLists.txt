@@ -40,8 +40,15 @@ SET_PROPERTY(TARGET merge-sort-inv PROPERTY CXX_STANDARD_REQUIRED ON)
 
 ADD_EXECUTABLE(quick-sort-inv src/quick_sort_inv.c)
 TARGET_LINK_LIBRARIES(quick-sort-inv utils)
-SET_PROPERTY(TARGET quick-sort-inv PROPERTY C_STANDARD 11)
-SET_PROPERTY(TARGET quick-sort-inv PROPERTY CXX_STANDARD_REQUIRED ON)
+
+ADD_EXECUTABLE(rand-select src/rand_select.c src/pivot_utils.c)
+TARGET_LINK_LIBRARIES(rand-select utils)
+
+ADD_EXECUTABLE(deter-select src/deter_select.c src/pivot_utils.c)
+TARGET_LINK_LIBRARIES(deter-select msort utils)
+
+ADD_EXECUTABLE(rand-min-cut src/rand_min_cut.c src/graph_utils.c)
+TARGET_LINK_LIBRARIES(rand-min-cut utils)
 
 ADD_EXECUTABLE(strassen-mul src/strassen_mul.c)
 TARGET_LINK_LIBRARIES(strassen-mul utils matrix msort)

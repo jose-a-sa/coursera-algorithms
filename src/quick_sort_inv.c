@@ -1,7 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <time.h>
 #include "utils.h"
+
+typedef struct partition_t
+{
+    size_t lo;
+    size_t hi;
+} partition_t;
 
 void swap(int *a, int *b)
 {
@@ -10,68 +16,74 @@ void swap(int *a, int *b)
     *b = t;
 }
 
-size_t pivot_first(int *const a, const size_t lo, const size_t hi)
+void pivot_first(int *const a, const partition_t rng)
 {
-    return lo;
+    return;
 }
 
-size_t pivot_last(int *const a, const size_t lo, const size_t hi)
+void pivot_last(int *const a, const partition_t rng)
 {
-    swap(&a[lo], &a[hi - 1]);
-    return lo;
+    swap(&a[rng.lo], &a[rng.hi - 1]);
 }
 
-size_t pivot_median(int *const a, const size_t lo, const size_t hi)
+void pivot_median(int *const a, const partition_t rng)
 {
-    size_t m = lo + (hi - lo) / 2 - ((hi - lo + 1) % 2);
+    size_t m = rng.lo + (rng.hi - rng.lo) / 2 - ((rng.hi - rng.lo + 1) % 2);
+    int a_l = a[rng.lo];
+    int a_m = a[m];
+    int a_r = a[rng.hi - 1];
 
-    if ((a[hi - 1] <= a[m] && a[m] <= a[lo]) || (a[lo] <= a[m] && a[m] <= a[hi - 1]))
-        swap(&a[lo], &a[m]);
-    else if ((a[hi - 1] <= a[lo] && a[m] <= a[hi - 1]) || (a[hi - 1] <= a[m] && a[lo] <= a[hi - 1]))
-        swap(&a[lo], &a[hi - 1]);
+    if ((a_r <= a_m && a_m <= a_l) || (a_l <= a_m && a_m <= a_r))
+        swap(&a[rng.lo], &a[m]);
+    else if ((a_m <= a_r && a_r <= a_l) || (a_l <= a_r && a_r <= a_m))
+        swap(&a[rng.lo], &a[rng.hi - 1]);
+}
 
-    return lo;
+void pivot_random(int *const a, const partition_t rng)
+{
+    size_t i = rand() % (rng.hi - rng.lo) + rng.lo;
+    swap(&a[rng.lo], &a[i]);
 }
 
 size_t quick_sort_partition(int *const a,
-                            const size_t lo,
-                            const size_t hi,
-                            size_t (*_Nonnull pivot_func)(int *const, const size_t, const size_t),
+                            const partition_t rng,
+                            void (*_Nonnull pivot_func)(int *const, const partition_t),
                             size_t *const cnt)
 {
-    (*cnt) = (*cnt) + hi - lo - 1;
+    (*cnt) = (*cnt) + rng.hi - rng.lo - 1;
 
-    size_t pi = pivot_func(a, lo, hi);
-    int pivot = a[pi];
+    pivot_func(a, rng);
+    int pivot = a[rng.lo];
 
-    size_t i = lo + 1;
-    for (size_t j = lo + 1; j < hi; j++)
+    size_t i = rng.lo + 1;
+    for (size_t j = rng.lo + 1; j < rng.hi; j++)
     {
         if (a[j] < pivot)
             swap(&a[j], &a[i++]);
     }
-    swap(&a[pi], &a[i - 1]);
+    swap(&a[rng.lo], &a[i - 1]);
 
     return i - 1;
 }
 
-size_t quick_sort(int *const a,
-                  const size_t lo,
-                  const size_t hi,
-                  size_t (*_Nonnull pivot_func)(int *const, const size_t, const size_t),
-                  size_t *const cnt)
+void quick_sort(int *const a,
+                const partition_t rng,
+                void (*_Nonnull pivot_func)(int *const, const partition_t),
+                size_t *const cnt)
 {
-    if (hi - lo > 1)
+    if (rng.hi - rng.lo > 1)
     {
-        int pi = quick_sort_partition(a, lo, hi, pivot_func, cnt);
+        int pi = quick_sort_partition(a, rng, pivot_func, cnt);
 
-        quick_sort(a, lo, pi, pivot_func, cnt);
-        quick_sort(a, pi + 1, hi, pivot_func, cnt);
+        quick_sort(a, (partition_t){rng.lo, pi}, pivot_func, cnt);
+        quick_sort(a, (partition_t){pi + 1, rng.hi}, pivot_func, cnt);
     }
 }
 
 int main(int argc, const char *argv[])
 {
+    srand(time(NULL));
+
     const size_t n = 10000;
     int *exer_array;
     if ((exer_array = (int *)calloc(n, sizeof(int))) == NULL)
@@ -89,15 +101,15 @@ int main(int argc, const char *argv[])
     size_t cnt;
 
     cnt = 0;
-    quick_sort(array_int_copy(exer_array, n), 0, n, pivot_first, &cnt);
+    quick_sort(array_int_copy(exer_array, n), (partition_t){0, n}, pivot_first, &cnt);
     printf("Number of inversions (pivot_first): %zu\n", cnt);
 
     cnt = 0;
-    quick_sort(array_int_copy(exer_array, n), 0, n, pivot_last, &cnt);
+    quick_sort(array_int_copy(exer_array, n), (partition_t){0, n}, pivot_last, &cnt);
     printf("Number of inversions (pivot_last): %zu\n", cnt);
 
     cnt = 0;
-    quick_sort(array_int_copy(exer_array, n), 0, n, pivot_median, &cnt);
+    quick_sort(array_int_copy(exer_array, n), (partition_t){0, n}, pivot_median, &cnt);
     printf("Number of inversions (pivot_median): %zu\n", cnt);
 
     exit(EXIT_SUCCESS);

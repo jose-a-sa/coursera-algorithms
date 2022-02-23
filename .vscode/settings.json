@@ -33,6 +33,21 @@
         "*.tcc": "c",
         "string": "c",
         "unordered_map": "c",
-        "stop_token": "c"
+        "stop_token": "c",
+        "pivot_utils.h": "c",
+        "ratio": "c",
+        "iterator": "c",
+        "__functional_base": "c",
+        "atomic": "c",
+        "bitset": "c",
+        "chrono": "c",
+        "cstddef": "c",
+        "deque": "c",
+        "__memory": "c",
+        "limits": "c",
+        "locale": "c",
+        "system_error": "c",
+        "type_traits": "c",
+        "utility": "c"
     }
 }
