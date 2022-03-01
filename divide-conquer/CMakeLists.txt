@@ -19,8 +19,10 @@ TARGET_LINK_LIBRARIES(karatsuba utils m)
 
 ADD_EXECUTABLE(merge-sort-inv src/merge_sort_inv.c)
 TARGET_LINK_LIBRARIES(merge-sort-inv utils)
-SET_PROPERTY(TARGET merge-sort-inv PROPERTY C_STANDARD 11)
-SET_PROPERTY(TARGET merge-sort-inv PROPERTY CXX_STANDARD_REQUIRED ON)
+SET_PROPERTY(TARGET merge-sort-inv 
+    PROPERTY C_STANDARD 11
+    PROPERTY CXX_STANDARD_REQUIRED ON
+)
 
 ADD_EXECUTABLE(quick-sort-inv src/quick_sort_inv.c)
 TARGET_LINK_LIBRARIES(quick-sort-inv utils)

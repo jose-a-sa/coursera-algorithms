@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "utils.h"
 
@@ -12,6 +11,54 @@ void error(char *const msg)
 {
     fprintf(stderr, "ERROR: %s", msg);
     exit(EXIT_FAILURE);
+}
+
+char *abs_path(char *rel)
+{
+    char *pwd = getenv("PWD");
+    size_t n_pwd = strlen(pwd);
+    size_t n_rel = strlen(rel);
+
+    char *res;
+    if ((res = (char *)malloc((n_pwd + n_rel + 2) * sizeof(char))) == NULL)
+        error("failed to malloc char pointer in abs_filepath");
+
+    strcat(res, pwd);
+    strcat(res, "/");
+    strcat(res, rel);
+    res[n_pwd + n_rel + 1] = '\0';
+
+    return res;
+}
+
+bitarray_t *bitarray_init(size_t n)
+{
+    bitarray_t *a;
+    size_t stride = sizeof(bitarray_t);
+    size_t size = n / stride + (n % stride);
+    if ((a = (bitarray_t *)calloc(size, stride)) == NULL)
+        error("failed to malloc bitarray_t pointer in bitarray_init");
+
+    for (size_t i = 0; i < size; i++)
+        a[i] = (bitarray_t)0;
+
+    return a;
+}
+
+void bitarray_set(bitarray_t *a, size_t k, bool bit)
+{
+    size_t stride = sizeof(bitarray_t);
+    if (bit)
+        a[k / stride] |= 1 << (k % stride);
+    else
+        a[k / stride] &= ~(1 << (k % stride));
+}
+
+bool bitarray_get(bitarray_t *a, size_t k)
+{
+    size_t stride = sizeof(bitarray_t);
+    bool res = (a[k / stride] & (1 << (k % stride))) != 0;
+    return res;
 }
 
 void print_array_int(int *const a, const size_t n, char *const eol)

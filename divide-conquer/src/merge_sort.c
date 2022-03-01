@@ -22,7 +22,7 @@ void merge(int *array, const size_t l, const size_t r)
     // add R elements
     while (j < nR)
         array[k++] = R[j++];
-    
+
     free(L);
     free(R);
 }
@@ -40,7 +40,7 @@ void mergeSortRecursive(int *array, const size_t l, const size_t r)
     }
 }
 
-int *mergeSort(int * const array, const size_t n)
+int *mergeSort(int *const array, const size_t n)
 {
     int *copy = array_int_copy(array, n);
 

@@ -48,6 +48,9 @@
         "locale": "c",
         "system_error": "c",
         "type_traits": "c",
-        "utility": "c"
+        "utility": "c",
+        "string.h": "c",
+        "stdbool.h": "c",
+        "queue": "c"
     }
 }

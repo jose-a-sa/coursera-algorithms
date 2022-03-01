@@ -60,7 +60,7 @@ static char *_karatsuba_mul_single(char *const x, char *const y)
     int res = (x[0] - '0') * (y[0] - '0');
     char *z;
 
-    if(res >= 10)
+    if (res >= 10)
     {
         if ((z = (char *)calloc(3, sizeof(char))) == NULL)
             error("failed alloc of char pointer in karatsuba_mul");

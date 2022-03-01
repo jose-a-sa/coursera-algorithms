@@ -90,7 +90,7 @@ int main(int argc, const char *argv[])
         error("failed to calloc the array");
 
     FILE *f1;
-    if ((f1 = fopen("../data/array_inv_exer2.txt", "r")) == NULL)
+    if ((f1 = fopen(abs_path("../data/array_inv_exer2.txt"), "r")) == NULL)
         error("failed to read the file");
 
     int *ptr_i = exer_array;

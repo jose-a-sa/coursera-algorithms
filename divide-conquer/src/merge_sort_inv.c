@@ -59,7 +59,7 @@ size_t array_inversions_rec(array_inv_count *t, const size_t l, const size_t r)
 
         inv_l = array_inversions_rec(t, l, m);
         inv_r = array_inversions_rec(t, m, r);
-        
+
         inv_merge = array_inversions_merge(t, l, r);
     }
 
@@ -89,7 +89,7 @@ int main(int argc, const char *argv[])
         error("failed to calloc the array");
 
     FILE *f1;
-    if ((f1 = fopen("../data/array_inv_exer.txt", "r")) == NULL)
+    if ((f1 = fopen(abs_path("../data/array_inv_exer.txt"), "r")) == NULL)
         error("failed to read the file");
 
     int *ptr_i = exer_array;

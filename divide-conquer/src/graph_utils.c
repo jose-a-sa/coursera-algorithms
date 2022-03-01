@@ -32,8 +32,8 @@ graph_t *init_graph(size_t V, size_t E)
     if ((g = (graph_t *)malloc(sizeof(graph_t))) == NULL)
         error("failed to malloc graph_t pointer in init_graph");
 
-    edge_t * edge;
-    if ((edge = (edge_t *)malloc(E*sizeof(edge_t))) == NULL)
+    edge_t *edge;
+    if ((edge = (edge_t *)malloc(E * sizeof(edge_t))) == NULL)
         error("failed to malloc edge_t pointer in init_graph");
 
     g->V = V;

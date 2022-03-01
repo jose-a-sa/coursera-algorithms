@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 #include <string.h>
 
 #include "utils.h"
@@ -108,7 +109,8 @@ size_t karger_min_cut(graph_t *graph)
     {
         size_t root1 = subsets_find(subsets, edge[i].src);
         size_t root2 = subsets_find(subsets, edge[i].dest);
-        if (root1 != root2)
+
+        if (root2 != root1)
             cutedEdges++;
     }
 
@@ -119,23 +121,26 @@ int main(int argc, const char *argv[])
 {
     srand(time(NULL));
 
-    graph_t *g = init_graph_from_file("../data/kargerMinCut.txt");
-    assign_edges_from_file(g, "../data/kargerMinCut.txt");
+    printf("%zu\n", 16 % 32 == 0);
 
-    size_t tests = 300;
-    size_t minCutedEdges = 10*(g->E);
+    const char *filepath = abs_path("../data/kargerMinCut.txt");
+    graph_t *g = init_graph_from_file(filepath);
+    assign_edges_from_file(g, filepath);
+
+    size_t tries = 500;
+    size_t minCutedEdges = 10 * (g->E);
 
     printf("CUTS: ");
-    for(size_t i = 0; i < tests; i++)
+    for (size_t i = 0; i < tries; i++)
     {
-        size_t res = karger_min_cut(g)/2; // undirected edge = 2 * directed edges
+        size_t res = karger_min_cut(g) / 2;
         printf("%zu ", res);
         minCutedEdges = MIN(res, minCutedEdges);
     }
 
     printf("\nMIN CUT: %zu\n", minCutedEdges);
 
-    printf("Num edges: %zu\n", g->E/2);
+    printf("Num edges: %zu\n", g->E / 2);
 
     exit(EXIT_SUCCESS);
 }
