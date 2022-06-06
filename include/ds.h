@@ -17,7 +17,7 @@ typedef struct stackt_t
     size_t capacity;
     int *array;
 } stackt_t;
- 
+
 queue_t *queue_init(size_t);
 bool queue_full(queue_t *);
 bool queue_empty(queue_t *);

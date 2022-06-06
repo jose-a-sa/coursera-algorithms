@@ -26,15 +26,15 @@ void subsets_union(subset_t *const subsets, const size_t x, const size_t y)
     }
 }
 
-graph_t *init_graph(size_t V, size_t E)
+graph_t *graph_init(size_t V, size_t E)
 {
     graph_t *g;
     if ((g = (graph_t *)malloc(sizeof(graph_t))) == NULL)
-        error("failed to malloc graph_t pointer in init_graph");
+        error("failed to malloc graph_t pointer in graph_init");
 
     edge_t *edge;
     if ((edge = (edge_t *)malloc(E * sizeof(edge_t))) == NULL)
-        error("failed to malloc edge_t pointer in init_graph");
+        error("failed to malloc edge_t pointer in graph_init");
 
     g->V = V;
     g->E = E;

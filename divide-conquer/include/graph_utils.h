@@ -24,6 +24,6 @@ typedef struct Subset
 
 size_t subsets_find(subset_t *const, const size_t);
 void subsets_union(subset_t *const, const size_t, const size_t);
-graph_t *init_graph(size_t, size_t);
+graph_t *graph_init(size_t, size_t);
 
 #endif

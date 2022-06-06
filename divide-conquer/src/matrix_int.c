@@ -14,16 +14,16 @@ void matrix_int_check_dim(const size_t n, const size_t d)
 {
     char msg[45];
     sprintf(msg, "matrix dimension %zu must be positive integer", d);
-
+    
     if (n <= 0)
         matrix_int_error(msg);
 }
 
-void matrix_int_check_bounds(const size_t n, const size_t i, const size_t d, char *const var)
+void matrix_int_check_bounds(const size_t n, const size_t i, const size_t d, char* const var)
 {
     char msg[50];
     sprintf(msg, "matrix position %s in dimension %zu out of bounds", var, d);
-
+    
     if (i < 0 || i >= n)
         matrix_int_error(msg);
 }
@@ -60,7 +60,7 @@ matrix_int *matrix_int_calloc(const size_t n1, const size_t n2)
     return m;
 }
 
-void matrix_int_set(matrix_int *const m, const size_t i, const size_t j, int x)
+void matrix_int_set(matrix_int * const m, const size_t i, const size_t j, int x)
 {
     int *const data = m->data;
     const size_t n1 = m->n1;
@@ -72,7 +72,7 @@ void matrix_int_set(matrix_int *const m, const size_t i, const size_t j, int x)
     *(int *)(data + (i * n2 + j)) = x;
 }
 
-int matrix_int_get(matrix_int *const m, const size_t i, const size_t j)
+int matrix_int_get(matrix_int * const m, const size_t i, const size_t j)
 {
     int *const data = m->data;
     const size_t n1 = m->n1;
@@ -84,16 +84,16 @@ int matrix_int_get(matrix_int *const m, const size_t i, const size_t j)
     return *(int *)(data + (i * n2 + j));
 }
 
-matrix_int *matrix_int_submatrix(matrix_int *const m, const size_t iL, const size_t iR, const size_t jL, const size_t jR)
+matrix_int *matrix_int_submatrix(matrix_int * const m, const size_t iL, const size_t iR, const size_t jL, const size_t jR)
 {
     int *const data = m->data;
     const size_t n1 = m->n1;
     const size_t n2 = m->n2;
 
     matrix_int_check_bounds(n1, iL, 1, "iL");
-    matrix_int_check_bounds(n1, iR - 1, 1, "iR");
+    matrix_int_check_bounds(n1, iR-1, 1, "iR");
     matrix_int_check_bounds(n2, jL, 2, "jL");
-    matrix_int_check_bounds(n2, jR - 1, 2, "jR");
+    matrix_int_check_bounds(n2, jR-1, 2, "jR");
 
     const size_t N1 = iR - iL;
     const size_t N2 = jR - jL;
@@ -112,16 +112,16 @@ matrix_int *matrix_int_submatrix(matrix_int *const m, const size_t iL, const siz
     return subM;
 }
 
-matrix_int *matrix_int_from_array(int *const a, const size_t n1, const size_t n2)
+matrix_int *matrix_int_from_array(int * const a, const size_t n1, const size_t n2)
 {
     matrix_int_check_dim(n1, 1);
     matrix_int_check_dim(n2, 2);
 
-    matrix_int *const m = (matrix_int *)matrix_int_calloc(n1, n2);
+    matrix_int * const m = (matrix_int *) matrix_int_calloc(n1, n2);
     int *const data = m->data;
 
-    for (int i = 0; i < n1 * n2; i++)
-        *(int *)(data + i) = *(int *)(a + i);
+    for(int i =0; i < n1*n2; i++)
+        * (int *) (data + i) = * (int *) (a + i);
 
     return m;
 }

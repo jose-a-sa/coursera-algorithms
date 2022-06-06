@@ -65,9 +65,9 @@ static void __msort_rec(void *_Nonnull base,
 }
 
 void msort(void *_Nonnull base,
-           const size_t nel,
-           const size_t width,
-           int (*_Nonnull compar)(const void *_Nonnull, const void *_Nonnull))
+             const size_t nel,
+             const size_t width,
+             int (*_Nonnull compar)(const void *_Nonnull, const void *_Nonnull))
 {
     __msort_rec(base, 0, nel, width, compar);
 }

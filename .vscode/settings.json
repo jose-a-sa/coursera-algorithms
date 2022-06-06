@@ -51,6 +51,14 @@
         "utility": "c",
         "string.h": "c",
         "stdbool.h": "c",
-        "queue": "c"
+        "queue": "c",
+        "__hash_table": "c",
+        "__split_buffer": "c",
+        "__tree": "c",
+        "initializer_list": "c",
+        "list": "c",
+        "map": "c",
+        "set": "c",
+        "stack": "c"
     }
 }

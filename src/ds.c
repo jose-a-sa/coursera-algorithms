@@ -2,7 +2,7 @@
 #include "utils.h"
 #include <limits.h>
 
-queue_t * queue_init(size_t capacity)
+queue_t *queue_init(size_t capacity)
 {
     queue_t *q;
     if ((q = (queue_t *)malloc(sizeof(queue_t))) == NULL)
@@ -68,51 +68,51 @@ int queue_rear(queue_t *q)
     return q->array[q->rear];
 }
 
-stackt_t* stack_init(size_t capacity)
+stackt_t *stack_init(size_t capacity)
 {
-    stackt_t* s;
+    stackt_t *s;
     if ((s = (stackt_t *)malloc(sizeof(stackt_t))) == NULL)
         error("failed to malloc stackt_t pointer in stack_init");
 
     s->capacity = capacity;
     s->top = -1;
-    
+
     if ((s->array = (int *)malloc(capacity * sizeof(int))) == NULL)
         error("failed to malloc int pointer in stack_init");
 
     return s;
 }
 
-bool stack_full(stackt_t* s)
+bool stack_full(stackt_t *s)
 {
     return s->top == s->capacity - 1;
 }
- 
-bool stack_empty(stackt_t* s)
+
+bool stack_empty(stackt_t *s)
 {
     return s->top == -1;
 }
 
-void stack_push(stackt_t* s, int item)
+void stack_push(stackt_t *s, int item)
 {
     if (stack_full(s))
         return;
-    
+
     s->array[++s->top] = item;
 }
 
-int stack_pop(stackt_t* s)
+int stack_pop(stackt_t *s)
 {
     if (stack_empty(s))
         return INT_MIN;
-    
+
     return s->array[s->top--];
 }
 
-int stack_peek(stackt_t* s)
+int stack_peek(stackt_t *s)
 {
     if (stack_empty(s))
         return INT_MIN;
-    
+
     return s->array[s->top];
 }

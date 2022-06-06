@@ -13,10 +13,18 @@ void error(char *const);
 int mod(const int, const int);
 char *abs_path(char *);
 
-typedef uint32_t bitarray_t;
-bitarray_t *bitarray_init(size_t n);
-void bitarray_set(bitarray_t *a, size_t k, bool bit);
-bool bitarray_get(bitarray_t *a, size_t k);
+typedef uint32_t bitblock_t;
+typedef struct bits_t
+{
+    size_t n;
+    size_t stride;
+    size_t blocks;
+    bitblock_t *bits;
+} bits_t;
+bits_t *bitarray_init(size_t n);
+void bitarray_set(bits_t *a, size_t k, bool bit);
+bool bitarray_get(bits_t *a, size_t k);
+void bitblock_print(bitblock_t);
 
 void print_array_int(int *const, const size_t, char *const);
 int *sub_array_int(int *const, const size_t, const size_t);

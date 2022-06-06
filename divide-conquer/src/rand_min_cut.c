@@ -34,7 +34,7 @@ graph_t *init_graph_from_file(const char *filepath)
     if (line)
         free(line);
 
-    return init_graph(V, E);
+    return graph_init(V, E);
 }
 
 void assign_edges_from_file(graph_t *g, const char *filepath)
@@ -120,8 +120,6 @@ size_t karger_min_cut(graph_t *graph)
 int main(int argc, const char *argv[])
 {
     srand(time(NULL));
-
-    printf("%zu\n", 16 % 32 == 0);
 
     const char *filepath = abs_path("../data/kargerMinCut.txt");
     graph_t *g = init_graph_from_file(filepath);
